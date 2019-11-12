@@ -3,12 +3,14 @@
 // ======================
 let rover = {
   direction: "N",
-  x: "0",
-  y: "0",
+  x: 0,
+  y: 0,
   travelLog: ""
 }
 // ======================
 
+
+//STEPS 1-5 done + BONUS BACKWARDS and GRID LOCKED
 
 function turnLeft(rover) {
   console.log("turnLeft was called!");
@@ -68,38 +70,84 @@ function moveForward(rover) {
       break;
 
     case "E":
-        rover.x += 1;
+      rover.x += 1;
       break;
     case "S":
-        rover.y += 1;
+      rover.y += 1;
       break;
     case "W":
-        rover.x -= 1;
+      rover.x -= 1;
+      break;
+  }
+  
+  
+  if ((rover.x == -1 || rover.y == -1) || (rover.x == 10 || rover.y == 10)) {
+    if (rover.x == -1) {
+      rover.x ++;
+    }
+    else if(rover.x == 10) {
+      rover.x --;
+    }
+    if (rover.y == -1) {
+      rover.y ++;
+    }
+    else if (rover.y == 10) {
+      rover.y --;
+    }
+    return "Turn back!";
+  }
+
+  rover.travelLog = `X: ${rover.x} Y: ${rover.y} \n`;
+}
+
+function moveBackwards(rover){
+  console.log("moveBackwards was called")
+
+  switch (rover.direction) {
+
+    case "N":
+      rover.y += 1;
+      break;
+
+    case "E":
+      rover.x -= 1;
+      break;
+    case "S":
+      rover.y -= 1;
+      break;
+    case "W":
+      rover.x += 1;
       break;
   }
 
-  rover.travelLog += `X: ${rover.x} Y: ${rover.y} \n`;
 }
 
+
+
 //moves the rover by taking in commands
-function move(rover, commands){
-  for(let i = 0; i < commands.length; i++){
+function move(rover, commands) {
+  for (let i = 0; i < commands.length; i++) {
     let letter = commands.charAt(i);
-      switch (letter) {
-        case "f":
-          moveForward(rover);
-          break;
-        case "r":
-          turnRight(rover);
-          break;
-        case "l":
-          turnLeft(rover);
-          break;
-      }
+    switch (letter) {
+      case "f":
+
+        moveForward(rover);
+        break;
+      case "r":
+        turnRight(rover);
+        break;
+      case "l":
+        turnLeft(rover);
+        break;
+      case "b":
+        moveBackwards(rover);
+        break;
     }
-    return rover.travelLog;
-  
+    console.log(`X: ${rover.x} Y: ${rover.y} \n`)
   }
+  return rover.travelLog;
+
+}
 
 
 
